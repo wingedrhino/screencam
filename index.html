@@ -47,7 +47,7 @@
                         video.srcObject = stream
                         video.onloadedmetadata = (e) => video.play()
                         recorder = new MediaRecorder(stream)
-                        writeStream = createWriteStream('/dev/null')
+                        writeStream = createWriteStream('/dev/video21')
                         recorder.ondataavailable = function(event) {
                             writeStream.write(event.data);
                         }

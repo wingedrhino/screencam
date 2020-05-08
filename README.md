@@ -10,9 +10,25 @@ I'm a frontend and Electron noob, so this is intended to be a learning tool!
 
 ## Installtion
 
+### v4l2loopback
+
+On ArchLinux/Manjaro, run `yay v4l2loopback-dkms`.
+
+On Debian/Ubuntu, run `sudo apt install v4l2loopback-dkms`.
+
+[Set it up](https://github.com/wingedrhino/DistroSetup/tree/trunk/DistroAgnostic#fake-webcam-setup)
+
+Run `modprobe v4l2loopback`
+
+We've hard-coded `/dev/video21` as the destination for our stream, but it'll be
+configurable in a future version.
+
+### Electron
+
 There's nothing (yet) to npm/yarn install. But make sure you've Electron
 globally installed in the system, via `sudo pacman -Syu electron`,
-`yarn global add electron`, or `npm install electron -g`.
+`yarn global add electron`, or `npm install electron -g` (assuming you've
+got Node.js installed).
 
 Then run `electron .`
 
