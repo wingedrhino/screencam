@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>screencam</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <style>
+        #video {
+            border: 1px solid #999;
+            width: 98%;
+            max-width: 860px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>screencam</h1>
+    <br />
+    <p><button id="start">Start Capture</button>&nbsp;<button id="stop">Stop Capture</button></p>
+    <br />
+    <video id="video" autoplay></video>
+    <script>
+        // In the renderer process.
+        const { desktopCapturer } = require('electron')
+        const { createWriteStream } = require('fs');
+
+        desktopCapturer.getSources({ types: ['window', 'screen'] }).then(async sources => {
+            for (const source of sources) {
+                console.log(`Handling source ${source.name}`);
+                if (source.name === 'screencam') {
+                    try {
+                        const stream = await navigator.mediaDevices.getUserMedia({
+                            audio: false,
+                            video: {
+                                mandatory: {
+                                    chromeMediaSource: 'desktop',
+                                    chromeMediaSourceId: source.id,
+                                    minWidth: 1280,
+                                    maxWidth: 1280,
+                                    minHeight: 720,
+                                    maxHeight: 720
+                                }
+                            }
+                        })
+                        const video = document.querySelector('video')
+                        video.srcObject = stream
+                        video.onloadedmetadata = (e) => video.play()
+                        recorder = new MediaRecorder(stream)
+                        writeStream = createWriteStream('/dev/null')
+                        recorder.ondataavailable = function(event) {
+                            writeStream.write(event.data);
+                        }
+                        // stream.pipe(writeStream)
+                    } catch (e) {
+                        console.log(e)
+                    }
+                    return
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

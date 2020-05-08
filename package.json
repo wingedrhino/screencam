@@ -1,0 +1,16 @@
+{
+  "name": "screencam",
+  "version": "1.0.0",
+  "description": "Stream your screen to a v4l2loopback virtual camera",
+  "main": "main.js",
+  "repository": "https://github.com/wingedrhino/screencam",
+  "author": "The Winged Rhino",
+  "license": " MPL-2.0",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "start": "electron7 . --no-sandbox"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
